@@ -121,7 +121,6 @@ if __name__ == "__main__":
     # Make all the blobs
     for i in range(0, blobCount):
         loc = Location(blobLocationX[i], blobLocationY[i])
-        # TODO: Add speed, power, fight (fight or not-fight), size
         # Define fight
         fight = (np.random.random(1)[0] > 0.5)
         # Define power as size (bSizes[i] * blobSpeeds[i]
@@ -146,17 +145,28 @@ if __name__ == "__main__":
 
     for t in range(0, int(round(periods * tics))):
     # Food distribution rule
+        #Insert the array definitions for dArray and rArray
+        dArray: list = []
+        rArray: list = []
         # If more than one blob reaches food in the same tick the outcome depends on fighty/flight matix:
         for i in range(0, int(round(len(foodList)))):
             foodRadius=foodList[i].radius()
-            for i in range(0,int(round(len(blobList)))):
-                blobRadius = int(blobList[i].radius)
-            #Trying to figure out the nxt math step
             
-
+            for j in range(0,int(round(len(blobList)))):
+                blobRadius = int(blobList[j].radius)
+                #Trying to figure out the next math step
+                
+                distance = (
+                    ((((blobList[j].location.x)) - ((foodList[i].location.x))) ** 2
+                    + 
+                    (((blobList[j].location.y)) - ((foodList[i].location.y))) ** 2) ** 0.5)
+                print("d: ",distance)
+                
+                dArray.append(distance)
+                rArray.append(int((foodList[i].radius())) + int((blobList[j].radius())))
             
 
 
         # If all "fight = False", then each gets food.energy/N for N blobs at food
         # If at least 1 is "fight = True" then all flights run away with no food
-        # If more than 1 fight, then the "winner" is randomly selected and the other "fighters" die
+        # If more than 1 fight, then the "winner" is randomly selected and the other "fighters"
