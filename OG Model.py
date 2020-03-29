@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # Define aggression function
     # Add a size function to the blobs, this will determine how close the food the blob must get to "consume" it
 
-
+print("potatoes")
     
    
         
