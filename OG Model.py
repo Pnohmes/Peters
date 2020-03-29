@@ -27,7 +27,6 @@ class Location:
         self.x = x
         self.y = y
 
-# THIS IS A GIT TEST
 class Blob:
     """A blob that acts a player in game theory tests
     """
