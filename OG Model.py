@@ -151,6 +151,7 @@ if __name__ == "__main__":
             foodRadius=foodList[i].radius()
             for i in range(0,int(round(len(blobList)))):
                 blobRadius = int(blobList[i].radius)
+            #Trying to figure out the nxt math step
             
 
             
