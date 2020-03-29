@@ -1,15 +1,16 @@
 # class rectangle:
 # def __init__(self, width, height, color):
-#self.width = width
-#self.height = height
-#self.color = color
-#self.area = width * height
+# self.width = width
+# self.height = height
+# self.color = color
+# self.area = width * height
 
 # Define blob as a class with speed, power, and fight/flight response
 import numpy as np
 
 import pprint
 import time
+import math
 
 
 class Location:
@@ -45,13 +46,16 @@ class Blob:
         self.fight = fight
         self.location = location
         self.size = size
-    def updateLocation(self,location):
+        self.radius = (size/np.pi)**0.5
+
+    def updateLocation(self, location):
         """Updates location of blob
-        
+
         Arguments:
             location {Location} -- New location for blob
         """
-        self.location = location 
+        self.location = location
+
 
 class Food:
     """Designates food propertis of objects, currenlty a unique value, could eventually be a part of blobls when it's time to simulate carnivorous blobs
@@ -67,10 +71,14 @@ class Food:
         self.energy = energy
         self.location = location
         self.energyDensity = energyDensity
-        self.size = self.energy * energyDensity # Energy densety
+        self.size = self.energy * energyDensity  # Energy densety
 
     def print(self):
-        print(" location ", self.location.x," ", self.location.y ," energy ", self.energy)
+        print(" location ", self.location.x, " ",
+              self.location.y, " energy ", self.energy)
+
+    def radius(self):
+        return int((self.size/np.pi)**0.5)
 
 
 # This is effectively the core module code of the program. This will run continously?
@@ -93,15 +101,14 @@ if __name__ == "__main__":
     blobCount = 5
 
     # Define the speeds of each blob
-    topSpeed = 3 # units/time
-    minSpeed = 0.5 # units/time
-    blobSpeeds = np.random.uniform(topSpeed,minSpeed,blobCount)
+    topSpeed = 3  # units/time
+    minSpeed = 0.5  # units/time
+    blobSpeeds = np.random.uniform(topSpeed, minSpeed, blobCount)
 
     # Define the sizes of each blob, these will also need to be function inputs
     maxSize = 1.5
     minSize = 0.25
-    blobSizes = np.random.uniform(minSize,maxSize,blobCount)
-    
+    blobSizes = np.random.uniform(minSize, maxSize, blobCount)
 
     # Define the starting positions of the blobs
     blobLocationX = np.random.uniform(-20, 20, blobCount)
@@ -114,19 +121,22 @@ if __name__ == "__main__":
     # Make all the blobs
     for i in range(0, blobCount):
         loc = Location(blobLocationX[i], blobLocationY[i])
-        # TODO: Add speed, power, fight (fight or flight), size
+        # TODO: Add speed, power, fight (fight or not-fight), size
         # Define fight
-        fightOrFlight = np.random.random(1)[0] > 0.5
-        # Define power as size (times speed^2)/time
+        fight = (np.random.random(1)[0] > 0.5)
+        # Define power as size (bSizes[i] * blobSpeeds[i]
         power = blobSizes[i] * blobSpeeds[i]
-        blobList.append(Blob(blobSpeeds[i],power,fight,Location(blobLocationX, blobLocationY), blobSizes[i]))
+        blobList.append(Blob(blobSpeeds[i], power, fight, Location(blobLocationX, blobLocationY,), blobSizes[i]))
 
+    # Define the size of the time tics
+    # Experiment length (periods)
 
-
-    # Define the size of the time tics 
-    # Experiment length (periods) 
     periods = 200
-    tics = periods / max(blobSpeeds)
+    tics = round(periods / max(blobSpeeds))
+
+#  ################## periods and tics not working quite right
+
+
 
     # Define the function that determines the traveling direction of the blobs
     # Define reproduction function
@@ -134,12 +144,18 @@ if __name__ == "__main__":
     # Add a size function to the blobs, this will determine how close the food the blob must get to "consume" it
 
 
+    for t in range(0, int(round(periods * tics))):
     # Food distribution rule
-        # If more than one blob reaches food in the same tick the outcome depends on fighty/flight matix: 
+        # If more than one blob reaches food in the same tick the outcome depends on fighty/flight matix:
+        for i in range(0, int(round(len(foodList)))):
+            foodRadius=foodList[i].radius()
+            for i in range(0,int(round(len(blobList)))):
+                blobRadius = int(blobList[i].radius)
+            
+
+            
+
+
         # If all "fight = False", then each gets food.energy/N for N blobs at food
         # If at least 1 is "fight = True" then all flights run away with no food
         # If more than 1 fight, then the "winner" is randomly selected and the other "fighters" die
-
-   
-        
-

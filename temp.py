@@ -1,5 +1,13 @@
 import numpy as np
-import time
 
-randBool = np.random.random(1) > 0.5
-print(randBool)z
+periods = 200
+tics = round(periods / max([1,2]))
+
+
+
+print(type(tics))
+print(type(periods))
+
+print(np.pi)
+print("pi")
+
