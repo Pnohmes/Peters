@@ -31,18 +31,18 @@ class Blob:
     """A blob that acts a player in game theory tests
     """
 
-    def __init__(self, speed, power, ff, location, size):
+    def __init__(self, speed, power, fight, location, size):
         """A Blob that acts as a player in a game theroy test
 
             Arguments:
                 speed {[Array]} -- A x and y component of velocity
                 power {Integer} -- Rate of energy consumed per turn
-                ff {[Boolean]} -- Fight or flight: does the blob fight or flee from confrontation?
+                fight {[Boolean]} -- Fight or flight: does the blob fight or flee from confrontation?
                 location {[Location]} -- Location of the blob
             """
         self.speed = speed
         self.power = power
-        self.ff = ff
+        self.fight = fight
         self.location = location
         self.size = size
     def updateLocation(self,location):
@@ -114,22 +114,32 @@ if __name__ == "__main__":
     # Make all the blobs
     for i in range(0, blobCount):
         loc = Location(blobLocationX[i], blobLocationY[i])
-        # TODO: Add speed, power, ff (fight or flight), size
-        # Define ff
+        # TODO: Add speed, power, fight (fight or flight), size
+        # Define fight
         fightOrFlight = np.random.random(1)[0] > 0.5
         # Define power as size (times speed^2)/time
         power = blobSizes[i] * blobSpeeds[i]
-        blobList.append(Blob(blobSpeeds[i],power,fightOrFlight,Location(blobLocationX, blobLocationY), blobSizes[i]))
+        blobList.append(Blob(blobSpeeds[i],power,fight,Location(blobLocationX, blobLocationY), blobSizes[i]))
 
-    print("hi")    
-    # Define the the size of the time tics
+
+
+    # Define the size of the time tics 
+    # Experiment length (periods) 
+    periods = 200
+    tics = periods / max(blobSpeeds)
+
     # Define the function that determines the traveling direction of the blobs
     # Define reproduction function
     # Define aggression function
     # Add a size function to the blobs, this will determine how close the food the blob must get to "consume" it
 
-print("potatoes")
-    
+
+    # Food distribution rule
+        # If more than one blob reaches food in the same tick the outcome depends on fighty/flight matix: 
+        # If all "fight = False", then each gets food.energy/N for N blobs at food
+        # If at least 1 is "fight = True" then all flights run away with no food
+        # If more than 1 fight, then the "winner" is randomly selected and the other "fighters" die
+
    
         
 
